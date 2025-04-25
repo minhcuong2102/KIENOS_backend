@@ -170,20 +170,20 @@ SINCH_PHONE_NUMBER = os.environ.get('SINCH_PHONE_NUMBER')
 SINCH_SMS_URL = os.environ.get('SINCH_SMS_URL')
 
 
-# AWS Bucket settings
-# AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
-# AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
-# AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
-# AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME')
-# AWS_S3_FILE_OVERWRITE = False
-# AWS_DEFAULT_ACL = None
-# AWS_S3_VERIFY = True
+AWS Bucket settings
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME')
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+AWS_S3_VERIFY = True
 
-# # AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
+# AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
 
-# MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
-# STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
-# TEMPLATES_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/templates/'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
+TEMPLATES_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/templates/'
 
 
 # STORAGES = {
@@ -213,7 +213,7 @@ SINCH_SMS_URL = os.environ.get('SINCH_SMS_URL')
 #     },
 # }
 
-# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # # Additional S3 settings
 # AWS_S3_OBJECT_PARAMETERS = {
