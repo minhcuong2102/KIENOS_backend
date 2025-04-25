@@ -13,7 +13,7 @@ load_dotenv(dotenv_path=dotenv_path)
 
 DEBUG= os.environ.get('DEBUG')
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_KEY = ['django-insecure-ct1+c+q2(5!2@st^#y-avaw7dr(&^a%)dh!!^(h1o3v7(^*99r']
 
 ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
