@@ -40,7 +40,6 @@ from ..permissions import (
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('id')
-   logger = logging.getLogger(__name__)
     permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
     # pagination_class = CustomPagination
@@ -366,7 +365,7 @@ class UserViewSet(viewsets.ModelViewSet):
         
     except Exception as e:
         trace = traceback.format_exc()
-        logger.error(f"Login error: {trace}")
+        # logger.error(f"Login error: {trace}")
         return Response({
             "detail": "Lỗi máy chủ nội bộ.",
             "error": str(e),
