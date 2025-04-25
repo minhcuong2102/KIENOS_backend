@@ -24,16 +24,17 @@ FE_HOST = os.environ.get('FE_HOST', 'http://localhost:3000')
 # FE_HOST = 'http://192.168.110.40:3000'
 
 # CORS_ALLOW_CREDENTIALS = bool(os.environ.get('CORS_ALLOW_CREDENTIALS'))
-# CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = True
 
 # CORS_ALLOWED_ORIGINS = ["http://192.168.110.40:3000"]
 # CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS').split(',')
-# CORS_ALLOW_HEADERS = list(default_headers) + [
-#     'authorization',
-# ]
-# CORS_ALLOWED_ORIGINS = [
-#     "http://192.168.110.40:3000",
-# ]
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'authorization',
+]
+CORS_ALLOWED_ORIGINS = [
+    "http://192.168.110.40:3000",
+    "http://localhost:3000",
+]
 # CORS_ALLOW_ALL_ORIGINS = True
 
 INSTALLED_APPS = [
@@ -43,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'corsheaders',
+    'corsheaders',
     'channels',
     'storages',
     'rest_framework',
@@ -62,8 +63,8 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    # 'corsheaders.middleware.CorsMiddleware',
-    # 'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
