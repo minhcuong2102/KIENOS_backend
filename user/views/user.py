@@ -1,4 +1,6 @@
 import requests
+import traceback
+import logging
 from django.shortcuts import render
 from django.contrib.auth import authenticate
 from django.http import JsonResponse
@@ -38,7 +40,7 @@ from ..permissions import (
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('id')
-   
+   logger = logging.getLogger(__name__)
     permission_classes = [IsAuthenticated]
     serializer_class = UserSerializer
     # pagination_class = CustomPagination
@@ -318,11 +320,12 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(methods=['post'], url_path='log-in', detail=False, permission_classes=[AllowAny], 
             renderer_classes=[renderers.JSONRenderer])
     def log_in(self, request):
+       try:
         email = request.data.get("email")
         password = request.data.get("password")
         
         user = authenticate(request, username=email, password=password)
-        
+
         if user is not None:
             refresh = RefreshToken.for_user(user)
             access_token = str(refresh.access_token)
@@ -333,21 +336,12 @@ class UserViewSet(viewsets.ModelViewSet):
             if user.role.name in ['customer', 'coach']:
                 if user.role.name == 'coach':
                     coach_profile = getattr(user, 'coach_profile', None)
-                    if coach_profile:
-                        full_name = coach_profile.first_name + " " + coach_profile.last_name
-                    else:
-                        full_name = "Chưa thêm hồ sơ"
+                    full_name = coach_profile.first_name + " " + coach_profile.last_name if coach_profile else "Chưa thêm hồ sơ"
                 else:
                     customer_profile = getattr(user, 'customer_profile', None)
-                    if customer_profile:
-                        full_name = customer_profile.first_name + " " + customer_profile.last_name
-                    else:
-                        full_name = "Chưa thêm hồ sơ"
+                    full_name = customer_profile.first_name + " " + customer_profile.last_name if customer_profile else "Chưa thêm hồ sơ"
 
-            if avatar_url:
-                avatar = avatar_url.url
-            else:
-                avatar = None
+            avatar = avatar_url.url if avatar_url else None
 
             response = Response({
                 "accessToken": access_token,
@@ -361,14 +355,74 @@ class UserViewSet(viewsets.ModelViewSet):
             response.set_cookie(
                 key='refreshToken',
                 value=refresh_token,
-                httponly=True,  
-                secure=True, # True if Production mode is on
-                samesite='None', 
-                max_age=24*60*60, 
+                httponly=True,
+                secure=True,  # True if using HTTPS
+                samesite='None',
+                max_age=24 * 60 * 60,
             )
             return response
         else:
             return Response({"detail": "Invalid credentials!"}, status=status.HTTP_401_UNAUTHORIZED)
+        
+    except Exception as e:
+        trace = traceback.format_exc()
+        logger.error(f"Login error: {trace}")
+        return Response({
+            "detail": "Lỗi máy chủ nội bộ.",
+            "error": str(e),
+            "trace": trace
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        # email = request.data.get("email")
+        # password = request.data.get("password")
+        
+        # user = authenticate(request, username=email, password=password)
+        
+        # if user is not None:
+        #     refresh = RefreshToken.for_user(user)
+        #     access_token = str(refresh.access_token)
+        #     refresh_token = str(refresh)
+        #     avatar_url = user.avatar_url
+        #     full_name = None
+
+        #     if user.role.name in ['customer', 'coach']:
+        #         if user.role.name == 'coach':
+        #             coach_profile = getattr(user, 'coach_profile', None)
+        #             if coach_profile:
+        #                 full_name = coach_profile.first_name + " " + coach_profile.last_name
+        #             else:
+        #                 full_name = "Chưa thêm hồ sơ"
+        #         else:
+        #             customer_profile = getattr(user, 'customer_profile', None)
+        #             if customer_profile:
+        #                 full_name = customer_profile.first_name + " " + customer_profile.last_name
+        #             else:
+        #                 full_name = "Chưa thêm hồ sơ"
+
+        #     if avatar_url:
+        #         avatar = avatar_url.url
+        #     else:
+        #         avatar = None
+
+        #     response = Response({
+        #         "accessToken": access_token,
+        #         "refreshToken": refresh_token,
+        #         "role": user.role.name,
+        #         "status": user.status,
+        #         "avatar": avatar,
+        #         "fullName": full_name,
+        #     }, status=status.HTTP_200_OK)
+
+        #     response.set_cookie(
+        #         key='refreshToken',
+        #         value=refresh_token,
+        #         httponly=True,  
+        #         secure=True, # True if Production mode is on
+        #         samesite='None', 
+        #         max_age=24*60*60, 
+        #     )
+        #     return response
+        # else:
+        #     return Response({"detail": "Invalid credentials!"}, status=status.HTTP_401_UNAUTHORIZED)
         
 
     @action(methods=['post'], url_path='refresh', detail=False, permission_classes=[AllowAny], 
