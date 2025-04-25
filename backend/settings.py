@@ -15,7 +15,7 @@ DEBUG= os.environ.get('DEBUG')
 
 SECRET_KEY = ['django-insecure-ct1+c+q2(5!2@st^#y-avaw7dr(&^a%)dh!!^(h1o3v7(^*99r']
 
-# ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 
 DEFAULT_HOST = os.environ.get('DEFAULT_HOST', 'http://127.0.0.1:8000')
