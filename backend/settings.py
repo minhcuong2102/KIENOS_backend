@@ -30,6 +30,9 @@ CORS_ALLOW_CREDENTIALS = bool(os.environ.get('CORS_ALLOW_CREDENTIALS'))
 # CORS_ALLOW_HEADERS = list(default_headers) + [
 #     'authorization',
 # ]
+CORS_ALLOWED_ORIGINS = [
+    "http://192.168.110.40:3000",
+]
 CORS_ALLOW_ALL_ORIGINS = True
 
 INSTALLED_APPS = [
