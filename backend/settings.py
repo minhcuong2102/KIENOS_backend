@@ -23,18 +23,18 @@ NODEJS_HOST = os.environ.get('NODEJS_HOST', 'http://127.0.0.1:8888')
 FE_HOST = os.environ.get('FE_HOST', 'http://localhost:3000')
 # FE_HOST = 'http://192.168.110.40:3000'
 
-# CORS_ALLOW_CREDENTIALS = bool(os.environ.get('CORS_ALLOW_CREDENTIALS'))
+CORS_ALLOW_CREDENTIALS = bool(os.environ.get('CORS_ALLOW_CREDENTIALS'))
 # CORS_ALLOW_CREDENTIALS = True
 
-# CORS_ALLOWED_ORIGINS = ["http://192.168.110.40:3000"]
+CORS_ALLOWED_ORIGINS = ["http://192.168.110.40:3000"]
 # CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS').split(',')
-# CORS_ALLOW_HEADERS = list(default_headers) + [
-#     'authorization',
-# ]
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'authorization',
+]
 # CORS_ALLOWED_ORIGINS = [
 #     "http://192.168.110.40:3000",
 # ]
-# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_ALL_ORIGINS = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
