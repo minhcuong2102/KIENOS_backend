@@ -19,8 +19,9 @@ ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 
 # DEFAULT_HOST = os.environ.get('DEFAULT_HOST', 'http://127.0.0.1:8000')
-DEFAULT_HOST = os.environ.get('https://kienos-backend-4w2a.onrender.com')
-NODEJS_HOST = os.environ.get('NODEJS_HOST', 'http://127.0.0.1:8888')
+DEFAULT_HOST = 'https://kienos-backend-4w2a.onrender.com'
+# NODEJS_HOST = os.environ.get('NODEJS_HOST', 'http://127.0.0.1:8888')
+NODEJS_HOST = 'https://kienos-nodejs-bul1.onrender.com'
 # FE_HOST = os.environ.get('FE_HOST', 'http://localhost:3000')
 FE_HOST = 'http://192.168.110.40:3000'
 
