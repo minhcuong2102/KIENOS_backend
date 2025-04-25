@@ -15,7 +15,7 @@ DEBUG= os.environ.get('DEBUG')
 
 SECRET_KEY = ['django-insecure-ct1+c+q2(5!2@st^#y-avaw7dr(&^a%)dh!!^(h1o3v7(^*99r']
 
-ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 
 DEFAULT_HOST = os.environ.get('DEFAULT_HOST', 'http://127.0.0.1:8000')
@@ -26,8 +26,10 @@ CORS_ALLOW_CREDENTIALS = bool(os.environ.get('CORS_ALLOW_CREDENTIALS'))
 
 CORS_ALLOWED_ORIGINS = ['*']
 # CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS').split(',')
-
-CORS_ALLOW_ALL_ORIGINS = bool(os.environ.get('CORS_ALLOW_ALL_ORIGINS'))
+# CORS_ALLOW_HEADERS = list(default_headers) + [
+#     'authorization',
+# ]
+CORS_ALLOW_ALL_ORIGINS = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
