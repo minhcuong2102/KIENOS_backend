@@ -15,7 +15,8 @@ DEBUG= os.environ.get('DEBUG')
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
+ALLOWED_HOSTS = ['*']
+# ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 
 DEFAULT_HOST = os.environ.get('DEFAULT_HOST', 'http://127.0.0.1:8000')
 NODEJS_HOST = os.environ.get('NODEJS_HOST', 'http://127.0.0.1:8888')
