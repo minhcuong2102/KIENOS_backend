@@ -28,9 +28,9 @@ CORS_ALLOW_CREDENTIALS = True
 
 # CORS_ALLOWED_ORIGINS = ["http://192.168.110.40:3000"]
 # CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS').split(',')
-CORS_ALLOW_HEADERS = list(default_headers) + [
-    'authorization',
-]
+# CORS_ALLOW_HEADERS = list(default_headers) + [
+#     'authorization',
+# ]
 CORS_ALLOWED_ORIGINS = [
     "http://192.168.110.40:3000",
     "http://localhost:3000",
