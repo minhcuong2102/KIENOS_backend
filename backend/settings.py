@@ -19,9 +19,10 @@ ALLOWED_HOSTS = ['*']
 # ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 
 # DEFAULT_HOST = os.environ.get('DEFAULT_HOST', 'http://127.0.0.1:8000')
-# NODEJS_HOST = os.environ.get('NODEJS_HOST', 'http://127.0.0.1:8888')
+DEFAULT_HOST = os.environ.get('https://kienos-backend-4w2a.onrender.com')
+NODEJS_HOST = os.environ.get('NODEJS_HOST', 'http://127.0.0.1:8888')
 # FE_HOST = os.environ.get('FE_HOST', 'http://localhost:3000')
-# FE_HOST = 'http://192.168.110.40:3000'
+FE_HOST = 'http://192.168.110.40:3000'
 
 # CORS_ALLOW_CREDENTIALS = bool(os.environ.get('CORS_ALLOW_CREDENTIALS'))
 CORS_ALLOW_CREDENTIALS = True
