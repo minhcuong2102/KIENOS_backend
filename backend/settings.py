@@ -170,7 +170,7 @@ SINCH_PHONE_NUMBER = os.environ.get('SINCH_PHONE_NUMBER')
 SINCH_SMS_URL = os.environ.get('SINCH_SMS_URL')
 
 
-AWS Bucket settings
+# AWS Bucket settings
 AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
 AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME')
