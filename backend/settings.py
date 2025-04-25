@@ -82,15 +82,22 @@ ROOT_URLCONF = 'backend.urls'
 WSGI_APPLICATION = 'backend.wsgi.application'
 ASGI_APPLICATION = 'backend.asgi.application'
 
-
+# 'default': {
+	# 	'ENGINE': os.environ.get('DB_ENGINE'),
+	# 	'NAME': os.environ.get('DB_NAME'),
+	# 	'USER': os.environ.get('DB_USER'),
+	# 	'PASSWORD': os.environ.get('DB_PASSWORD'),
+	# 	'HOST':os.environ.get('DB_HOST'),
+	# 	'PORT':os.environ.get('DB_PORT'),
+	# }
 DATABASES = {
 	'default': {
-		'ENGINE': os.environ.get('DB_ENGINE'),
-		'NAME': os.environ.get('DB_NAME'),
-		'USER': os.environ.get('DB_USER'),
-		'PASSWORD': os.environ.get('DB_PASSWORD'),
-		'HOST':os.environ.get('DB_HOST'),
-		'PORT':os.environ.get('DB_PORT'),
+		'ENGINE': "django.db.backends.postgresql"),
+		'NAME': "postgres",
+		'USER': "postgres.bflxlabwaaxucpwecgmj",
+		'PASSWORD': "Lequydon12b1@",
+		'HOST': "aws-0-ap-southeast-1.pooler.supabase.com",
+		'PORT': "5432",
 	}
 }
 
