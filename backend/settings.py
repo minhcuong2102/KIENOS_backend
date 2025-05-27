@@ -38,7 +38,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://192.168.110.40:3000",
     "http://localhost:3000",
     "http://192.168.204.181:3000",
-    "http://192.168.1.6:3000"
+    "http://192.168.1.6:3000",
+    "https://kienos-frontend-z1ie.onrender.com"	
 ]
 # CORS_ALLOW_ALL_ORIGINS = True
 
