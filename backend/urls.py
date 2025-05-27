@@ -16,7 +16,11 @@ class CustomProxyView(ProxyView):
             print('Route: ' + request.build_absolute_uri())
             print('Nodejs server không hoạt động.')
             return HttpResponseServerError("Nodejs server is offline.")
-
+    def get_upstream_url(self, request, path):
+        final_url = f"{settings.NODEJS_HOST}/{path}"
+        print(f"[🔁 Proxying] {request.build_absolute_uri()}  →  {final_url}")
+        return final_url
+        
 def hello_world(request):
     return HttpResponse("hello world")
 
@@ -30,7 +34,7 @@ urlpatterns = [
     path('', include('user.urls')),
     path('', include('user_profile.urls')),
     path('', include('workout.urls')),
-    re_path(r'^nodejs/(?P<path>.*)', CustomProxyView.as_view(upstream=settings.NODEJS_HOST + '/nodejs/')),
+    re_path(r'^nodejs/(?P<path>.*)', CustomProxyView.as_view(upstream=settings.NODEJS_HOST)),
     # re_path(r'^nodejs/(?P<path>.*)', CustomProxyView.as_view(upstream=settings.NODEJS_HOST)),
     
 
