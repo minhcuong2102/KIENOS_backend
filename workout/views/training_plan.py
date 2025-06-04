@@ -30,7 +30,8 @@ class TrainingPlanViewSet(viewsets.ModelViewSet):
             return EditTrainingPlanSerializer
         return TrainingPlanSerializer 
     
-    @action(methods=['get'], url_path='get-by-customers', detail=False, permission_classes=[IsAuthenticated | IsCoach], 
+    # @action(methods=['get'], url_path='get-by-customers', detail=False, permission_classes=[IsAuthenticated | IsCoach], 
+    @action(methods=['get'], url_path='get-by-customers', detail=False, permission_classes=[IsAuthenticated], 
             renderer_classes=[renderers.JSONRenderer])
     def get_by_customers(self, request):
         try:
