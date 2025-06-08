@@ -18,14 +18,22 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 
 DEFAULT_HOST = os.environ.get('DEFAULT_HOST', 'http://127.0.0.1:8000')
-NODEJS_HOST = os.environ.get('NODEJS_HOST', 'http://127.0.0.1:8888')
+NODEJS_HOST = NODEJS_HOST = 'https://kienos-nodejs-j3x1.onrender.com'
 FE_HOST = os.environ.get('FE_HOST', 'http://localhost:3000')
 
 CORS_ALLOW_CREDENTIALS = bool(os.environ.get('CORS_ALLOW_CREDENTIALS'))
 
 CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS').split(',')
 
-CORS_ALLOW_ALL_ORIGINS = bool(os.environ.get('CORS_ALLOW_ALL_ORIGINS'))
+# CORS_ALLOW_ALL_ORIGINS = bool(os.environ.get('CORS_ALLOW_ALL_ORIGINS'))
+CORS_ALLOWED_ORIGINS = [
+    "http://192.168.110.40:3000",
+    "http://localhost:3000",
+    "http://192.168.204.181:3000",
+    "http://192.168.1.6:3000"
+    "http://192.168.1.6:3000",
+    "https://kienos-frontend-z1ie.onrender.com"	
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
