@@ -56,7 +56,7 @@ class NotificationUserViewSet(viewsets.ModelViewSet):
                     )
                     print("Đã gửi.")
                 except Exception as e:
-                    print(f"Lỗi gửi push cho {user.username}: {e}")
+                    print(f"Lỗi gửi push cho {user.id}: {e}")
 
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         
