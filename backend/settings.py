@@ -34,7 +34,8 @@ CORS_ALLOWED_ORIGINS = [
     "http://192.168.204.181:3000",
     "http://192.168.1.6:3000"
     "http://192.168.1.6:3000",
-    "https://kienos-frontend-z1ie.onrender.com"	
+    "https://kienos-frontend-z1ie.onrender.com",
+    "kienos-backend-4w2a.onrender.com"
 ]
 
 INSTALLED_APPS = [
