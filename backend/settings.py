@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'user_profile',
     'workout',
     'notification',
-    
+    'device_token'
 ]
 
 MIDDLEWARE = [

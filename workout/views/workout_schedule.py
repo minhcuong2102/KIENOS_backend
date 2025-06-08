@@ -17,7 +17,8 @@ from ..models.exercise import Exercise
 from base.permissions import IsAdmin, IsCoach, IsCustomer
 import json
 from django.utils import timezone
-
+from datetime import timedelta
+from django.utils.dateparse import parse_datetime
 
 class WorkoutScheduleViewSet(viewsets.ModelViewSet):
     queryset = WorkoutSchedule.objects.all().order_by('id')
@@ -65,6 +66,29 @@ class WorkoutScheduleViewSet(viewsets.ModelViewSet):
         
         return Response(serializer.data)
     
+    # def create(self, request, *args, **kwargs):
+    #     serializer = EditWorkoutScheduleSerializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+
+    #     training_plan_data = serializer.validated_data.pop('training_plan')
+    #     try:
+    #         training_plan = TrainingPlan.objects.get(id=training_plan_data['id'])
+
+    #         for key, value in training_plan_data.items():
+    #             if key != 'exercises':
+    #                 setattr(training_plan, key, value)
+
+    #         exercise_ids = [exercise['id'] for exercise in training_plan_data['exercises']]
+    #         training_plan.exercises.set(Exercise.objects.filter(pk__in=exercise_ids))
+    #     except TrainingPlan.DoesNotExist:
+    #         return Response({'message': 'Training plan not found!'}, status=status.HTTP_404_NOT_FOUND)
+
+    #     training_plan.save()
+
+    #     workout_schedule = WorkoutSchedule.objects.create(**serializer.validated_data, training_plan=training_plan)
+    #     workout_schedule_serializer = WorkoutScheduleSerializer(workout_schedule)
+
+    #     return Response(workout_schedule_serializer.data, status=status.HTTP_201_CREATED)
     def create(self, request, *args, **kwargs):
         serializer = EditWorkoutScheduleSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -84,11 +108,31 @@ class WorkoutScheduleViewSet(viewsets.ModelViewSet):
 
         training_plan.save()
 
-        workout_schedule = WorkoutSchedule.objects.create(**serializer.validated_data, training_plan=training_plan)
-        workout_schedule_serializer = WorkoutScheduleSerializer(workout_schedule)
+        # 🟡 Lấy số ngày lặp lại (0 = không lặp)
+        repeat_days = int(request.data.get('repeat_days', 0))
 
-        return Response(workout_schedule_serializer.data, status=status.HTTP_201_CREATED)
-    
+        # 🟡 Chuẩn bị danh sách lịch sẽ tạo
+        schedules = []
+
+        # 🟡 Lặp để tạo từng buổi theo ngày
+        for i in range(repeat_days + 1):  # +1 để bao gồm cả ngày đầu tiên
+            new_data = serializer.validated_data.copy()
+
+            # Tăng start_time, end_time theo ngày
+            new_data['start_time'] += timedelta(days=i)
+            new_data['end_time'] += timedelta(days=i)
+
+            workout_schedule = WorkoutSchedule.objects.create(
+                **new_data,
+                training_plan=training_plan
+            )
+            schedules.append(workout_schedule)
+
+        # 🟢 Trả về danh sách tất cả lịch đã tạo
+        return Response(
+            WorkoutScheduleSerializer(schedules, many=True).data,
+            status=status.HTTP_201_CREATED
+        )
 
     def update(self, request, pk, *args, **kwargs):
         try:
@@ -172,24 +216,74 @@ class WorkoutScheduleViewSet(viewsets.ModelViewSet):
         return Response(workout_schedule_serializer.data, status=status.HTTP_200_OK)
     
 
-    @action(methods=['post'], url_path='create-new', detail=False, permission_classes=[IsCoach | IsCustomer | IsAdmin], 
-        renderer_classes=[renderers.JSONRenderer]) 
-    def create_new(self, request, *args, **kwargs):
-        ws_data = {
-            'start_time': request.data.get('start_time', [None]),
-            'end_time': request.data.get('end_time', [None]),
-            'customer': request.data.get('customer', [None]),
-            'coach': request.user.coach_profile.id
-        }
+    # @action(methods=['post'], url_path='create-new', detail=False, permission_classes=[IsCoach | IsCustomer | IsAdmin], 
+    #     renderer_classes=[renderers.JSONRenderer]) 
+    # def create_new(self, request, *args, **kwargs):
+    #     ws_data = {
+    #         'start_time': request.data.get('start_time', [None]),
+    #         'end_time': request.data.get('end_time', [None]),
+    #         'customer': request.data.get('customer', [None]),
+    #         'coach': request.user.coach_profile.id
+    #     }
                 
-        serializer = CustomWorkoutScheduleSerializer(data=ws_data)
-        serializer.is_valid(raise_exception=True)
+    #     serializer = CustomWorkoutScheduleSerializer(data=ws_data)
+    #     serializer.is_valid(raise_exception=True)
 
-        tp_data = request.data['training_plan']
+    #     tp_data = request.data['training_plan']
 
-        training_plan_data = json.loads(tp_data)
+    #     training_plan_data = json.loads(tp_data)
 
-        if training_plan_data:
+    #     if training_plan_data:
+    #         try:
+    #             training_plan = TrainingPlan.objects.get(id=training_plan_data['id'])
+
+    #             for key, value in training_plan_data.items():
+    #                 if key not in ['exercises', 'customer']:
+    #                     setattr(training_plan, key, value)
+
+    #             exercise_ids = [exercise['id'] for exercise in training_plan_data['exercises']]
+    #             training_plan.exercises.set(Exercise.objects.filter(pk__in=exercise_ids))
+    #             cus_profile = CustomerProfile.objects.get(id=training_plan_data['customer']['id'])
+    #             training_plan.customer = cus_profile
+
+    #             training_plan.save()
+
+    #         except TrainingPlan.DoesNotExist:
+    #             return Response({'message': 'Training plan not found!'}, status=status.HTTP_404_NOT_FOUND)
+    #     else:
+    #         return Response({"error": "No training plan data were provided!"}, status=status.HTTP_400_BAD_REQUEST)
+        
+
+    #     workout_schedule = WorkoutSchedule.objects.create(**serializer.validated_data, training_plan=training_plan)
+    #     workout_schedule_serializer = WorkoutScheduleSerializer(workout_schedule)
+
+    #     return Response(workout_schedule_serializer.data, status=status.HTTP_201_CREATED)
+
+    @action(methods=['post'], url_path='create-new', detail=False, permission_classes=[IsCoach | IsCustomer | IsAdmin],
+        renderer_classes=[renderers.JSONRenderer])
+    def create_new(self, request, *args, **kwargs):
+        try:
+            repeat_days = int(request.data.get('repeat_days', 0))  # Số ngày lặp lại
+            print(repeat_days)
+            start_time_str = request.data.get('start_time')
+            end_time_str = request.data.get('end_time')
+
+            start_time = parse_datetime(start_time_str)
+            end_time = parse_datetime(end_time_str)
+
+            if not start_time or not end_time:
+                return Response({"error": "Invalid start_time or end_time"}, status=status.HTTP_400_BAD_REQUEST)
+
+            customer_id = request.data.get('customer')
+            coach_id = request.user.coach_profile.id
+
+            tp_data = request.data.get('training_plan')
+            training_plan_data = json.loads(tp_data) if tp_data else None
+
+            if not training_plan_data:
+                return Response({"error": "No training plan data provided"}, status=status.HTTP_400_BAD_REQUEST)
+
+            # Lấy training plan
             try:
                 training_plan = TrainingPlan.objects.get(id=training_plan_data['id'])
 
@@ -199,6 +293,7 @@ class WorkoutScheduleViewSet(viewsets.ModelViewSet):
 
                 exercise_ids = [exercise['id'] for exercise in training_plan_data['exercises']]
                 training_plan.exercises.set(Exercise.objects.filter(pk__in=exercise_ids))
+
                 cus_profile = CustomerProfile.objects.get(id=training_plan_data['customer']['id'])
                 training_plan.customer = cus_profile
 
@@ -206,14 +301,29 @@ class WorkoutScheduleViewSet(viewsets.ModelViewSet):
 
             except TrainingPlan.DoesNotExist:
                 return Response({'message': 'Training plan not found!'}, status=status.HTTP_404_NOT_FOUND)
-        else:
-            return Response({"error": "No training plan data were provided!"}, status=status.HTTP_400_BAD_REQUEST)
-        
 
-        workout_schedule = WorkoutSchedule.objects.create(**serializer.validated_data, training_plan=training_plan)
-        workout_schedule_serializer = WorkoutScheduleSerializer(workout_schedule)
+            created_schedules = []
 
-        return Response(workout_schedule_serializer.data, status=status.HTTP_201_CREATED)
+            for i in range(repeat_days + 1):  # +1 để bao gồm cả ngày hiện tại
+                new_start = start_time + timedelta(days=i)
+                new_end = end_time + timedelta(days=i)
+
+                schedule = WorkoutSchedule.objects.create(
+                    start_time=new_start,
+                    end_time=new_end,
+                    customer_id=customer_id,
+                    coach_id=coach_id,
+                    training_plan=training_plan
+                )
+                print(schedule.start_time)
+                print(schedule.end_time)
+                created_schedules.append(schedule)
+
+            serializer = WorkoutScheduleSerializer(created_schedules, many=True)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(methods=['post'], url_path='edit-multiple', detail=False, permission_classes=[IsCoach | IsCustomer | IsAdmin], 
         renderer_classes=[renderers.JSONRenderer]) 
