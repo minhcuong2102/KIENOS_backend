@@ -10,6 +10,7 @@ from rest_framework.decorators import action
 from rest_framework import renderers
 from base.permissions import IsSale, IsAdmin, IsCoach, IsCustomer
 from .firebase_utils import send_push_notification  # 👈 import hàm FCM
+from .firebase_utils import init_firebase
 from device_token.models.models import DeviceToken        # 👈 import model device token
 
 class NotificationUserViewSet(viewsets.ModelViewSet):
