@@ -41,7 +41,7 @@ class NotificationUserViewSet(viewsets.ModelViewSet):
 
             # Lấy tất cả device_token của user (nếu dùng nhiều thiết bị)
             device_tokens = DeviceToken.objects.filter(user=user)
-            # init_firebase()
+            init_firebase()
             for device_token in device_tokens:
                 print(f"Gửi tới token: {device_token.token}")
                 try:
