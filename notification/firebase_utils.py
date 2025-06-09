@@ -2,7 +2,7 @@ import firebase_admin
 from firebase_admin import credentials, messaging
 import os
 import json
-
+from django.conf import settings
 # Lấy đường dẫn tuyệt đối tới file serviceAccountKey.json trong cùng folder
 # cred_path = os.path.join(os.path.dirname(__file__), 'serviceAccountKey.json')
 # if not firebase_admin._apps:
@@ -31,7 +31,7 @@ import json
 if firebase_admin._apps:
         return
 
-    private_key = os.environ.get("FIREBASE_KEY").replace("\\n", "\n")
+    private_key = settings.FIREBASE_KEY.replace("\\n", "\n")
     
     cred_dict = {
         "type": "service_account",
