@@ -14,7 +14,7 @@ load_dotenv(dotenv_path=dotenv_path)
 DEBUG= os.environ.get('DEBUG')
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
-
+FIREBASE_KEY=os.environ.get('FIREBASE_KEY')
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 
 # DEFAULT_HOST = os.environ.get('DEFAULT_HOST', 'http://127.0.0.1:8000')
