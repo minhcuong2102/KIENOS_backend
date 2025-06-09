@@ -30,7 +30,7 @@ urlpatterns = [
     path('', include('user.urls')),
     path('', include('user_profile.urls')),
     path('', include('workout.urls')),
-    re_path(r'^nodejs/(?P<path>.*)', CustomProxyView.as_view(upstream=settings.NODEJS_HOST)),
+    re_path(r'^nodejs/(?P<path>.*)', CustomProxyView.as_view(upstream=settings.NODEJS_HOST + '/nodejs')),
     
 
 ]
