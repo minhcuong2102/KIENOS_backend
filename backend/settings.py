@@ -187,7 +187,7 @@ AWS_S3_VERIFY = True
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.{AWS_S3_REGION_NAME}.amazonaws.com'
 
 # MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/media/'
-MEDIA_URL = f''
+MEDIA_URL = f'https://res.cloudinary.com/'
 STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/static/'
 TEMPLATES_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/templates/'
 
