@@ -39,7 +39,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CLOUD_SECRET=os.environ.get('CLOUD_SECRET')
-CLOUDINARY_URL=os.environ.get('CLOUDINARY_URL')
+CLOUDINARY_URL=f'cloudinary://{os.environ.get('CLOUD_API')}:{os.environ.get('CLOUD_SECRET')}@dzcvenbcx'
 CLOUD_API=os.environ.get('CLOUD_API')
 
 INSTALLED_APPS = [
