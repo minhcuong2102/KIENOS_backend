@@ -66,8 +66,8 @@ class CustomerProfileViewSet(viewsets.ModelViewSet):
 
             if profile_serializer.is_valid():
                 profile_serializer.save(customer=user)
-                cloudinary.config(cloud_name = settings.CLOUDINARY_URL, api_key=settings.CLOUD_API, api_secret=settings.CLOUD_SECRET)
-                cloudinary.uploader.upload(request.data.get('avatar_url'))
+                # cloudinary.config(cloud_name = settings.CLOUDINARY_URL, api_key=settings.CLOUD_API, api_secret=settings.CLOUD_SECRET)
+                # cloudinary.uploader.upload(request.data.get('avatar_url'))
                 return Response({'message': 'Profile created successfully!'}, status=status.HTTP_201_CREATED)
             else:
                 return Response({'profile_errors': profile_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
@@ -86,8 +86,8 @@ class CustomerProfileViewSet(viewsets.ModelViewSet):
             user_data['avatar_url'] = instance.customer.avatar_url
         else:
             user_data['avatar_url'] = request.data.get('avatar_url')
-            cloudinary.config(cloud_name=settings.CLOUDINARY_URL, api_key=settings.CLOUD_API, api_secret=settings.CLOUD_SECRET)
-            cloudinary.uploader.upload(request.data.get('avatar_url'))
+            # cloudinary.config(cloud_name=settings.CLOUDINARY_URL, api_key=settings.CLOUD_API, api_secret=settings.CLOUD_SECRET)
+            # cloudinary.uploader.upload(request.data.get('avatar_url'))
 
         user_serializer = UserProfileSerializer(instance.customer, data=user_data, partial=partial)
 
