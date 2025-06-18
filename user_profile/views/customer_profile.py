@@ -13,6 +13,7 @@ from user.serializers.user import UserProfileSerializer
 from user_profile.models.coach_profile import CoachProfile
 from service.models.contract import Contract
 from base.permissions import IsCustomer
+from django.conf import settings
 
 class CustomerProfileViewSet(viewsets.ModelViewSet):
     queryset = CustomerProfile.objects.all().order_by('id')
@@ -68,6 +69,8 @@ class CustomerProfileViewSet(viewsets.ModelViewSet):
             return Response({'user_errors': user_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, *args, **kwargs):
+        cloudinary.config(cloud_name = settings.CLOUDINARY_URL, api_key=settings.CLOUD_API, api_secret=settings.CLOUD_SECRET)
+        cloudinary.uploader.upload(request.data.get('avatar_url'))
         partial = kwargs.pop('partial', False) 
         instance = self.get_object()  
         user_data = {
