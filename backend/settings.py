@@ -39,8 +39,8 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CLOUD_SECRET=os.environ.get('CLOUD_SECRET')
-CLOUDINARY_URL=f'cloudinary://{os.environ.get('CLOUD_API')}:{os.environ.get('CLOUD_SECRET')}@dzcvenbcx'
 CLOUD_API=os.environ.get('CLOUD_API')
+CLOUDINARY_URL=f'cloudinary://{CLOUD_API}:{CLOUD_SECRET}@dzcvenbcx'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
