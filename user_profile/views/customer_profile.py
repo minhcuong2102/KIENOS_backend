@@ -15,7 +15,9 @@ from service.models.contract import Contract
 from base.permissions import IsCustomer
 from django.conf import settings
 import cloudinary
+from cloudinary import CloudinaryImage
 import cloudinary.uploader
+import cloudinary.api
 
 class CustomerProfileViewSet(viewsets.ModelViewSet):
     queryset = CustomerProfile.objects.all().order_by('id')
@@ -84,8 +86,8 @@ class CustomerProfileViewSet(viewsets.ModelViewSet):
             user_data['avatar_url'] = instance.customer.avatar_url
         else:
             user_data['avatar_url'] = request.data.get('avatar_url')
-            cloudinary.config(cloud_name = settings.CLOUDINARY_URL, api_key=settings.CLOUD_API, api_secret=settings.CLOUD_SECRET)
-            cloudinary.uploader.upload(request.FILES.get('avatar_url'))
+            cloudinary.config(cloud_name=settings.CLOUDINARY_URL, api_key=settings.CLOUD_API, api_secret=settings.CLOUD_SECRET)
+            cloudinary.uploader.upload(request.data.get('avatar_url'))
 
         user_serializer = UserProfileSerializer(instance.customer, data=user_data, partial=partial)
 
