@@ -135,7 +135,8 @@ def send_verification_email(user):
 
     expiration_time = token_lifetime.strftime("%H:%M %d/%m/%Y")
     
-    verification_url = f'{ default_scheme }://{ default_host }/api/v1/users/verify-email?token={token}'
+    # verification_url = f'{ default_scheme }://{ default_host }/api/v1/users/verify-email?token={token}'
+    verification_url = { default_host }/api/v1/users/verify-email/?token={token}'
     type_of_action = 'xác thực email'
 
     html_content = render_to_string('user/email/email_verification.html', {
