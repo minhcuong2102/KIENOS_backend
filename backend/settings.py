@@ -38,6 +38,10 @@ CORS_ALLOWED_ORIGINS = [
     "kienos-backend-4w2a.onrender.com"
 ]
 
+CLOUD_SECRET=os.environ.get('CLOUD_SECRET')
+CLOUDINARY_URL=os.environ.get('CLOUDINARY_URL')
+CLOUD_API=os.environ.get('CLOUD_API')
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
