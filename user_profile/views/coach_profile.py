@@ -32,9 +32,16 @@ class CoachProfileViewSet(viewsets.ModelViewSet):
 
     def create(self, request):
         user = request.user
-
+        config = cloudinary.config(secure=True)
+        print("Credentials: ", config.cloud_name, config.api_key, "\n")
+        upload_result = cloudinary.uploader.upload(request.data.get('avatar_url'))
+        full_url = upload_result['secure_url']
+        parsed_url = urlparse(upload_result['secure_url'])
+        short_url = parsed_url.path 
+        print(short_url)
+        # user_data['avatar_url'] = full_url
         user_data = {
-            'avatar_url': request.data.get('avatar_url'),
+            'avatar_url': full_url,
             'phone': request.data.get('phone'),
             'email': request.data.get('email'),
         }
@@ -81,6 +88,14 @@ class CoachProfileViewSet(viewsets.ModelViewSet):
             user_data['avatar_url'] = instance.coach.avatar_url
         else:
             user_data['avatar_url'] = request.data.get('avatar_url')
+            config = cloudinary.config(secure=True)
+            print("Credentials: ", config.cloud_name, config.api_key, "\n")
+            upload_result = cloudinary.uploader.upload(request.data.get('avatar_url'))
+            full_url = upload_result['secure_url']
+            parsed_url = urlparse(upload_result['secure_url'])
+            short_url = parsed_url.path 
+            print(short_url)
+            user_data['avatar_url'] = full_url
 
         user_serializer = UserProfileSerializer(instance.coach, data=user_data, partial=partial)
 
