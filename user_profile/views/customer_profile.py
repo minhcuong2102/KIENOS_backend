@@ -14,6 +14,7 @@ from user_profile.models.coach_profile import CoachProfile
 from service.models.contract import Contract
 from base.permissions import IsCustomer
 from django.conf import settings
+from urllib.parse import urlparse
 import cloudinary
 from cloudinary import CloudinaryImage
 import cloudinary.uploader
@@ -92,8 +93,12 @@ class CustomerProfileViewSet(viewsets.ModelViewSet):
             config = cloudinary.config(secure=True)
             print("Credentials: ", config.cloud_name, config.api_key, "\n")
             # print(request.data.get('avatar_url'))
-            cloudinary.uploader.upload(request.data.get('avatar_url'))
-
+            upload_result = cloudinary.uploader.upload(request.data.get('avatar_url'))
+            full_url = upload_result['secure_url']
+            parsed_url = urlparse(upload_result['secure_url'])
+            short_url = parsed_url.path 
+            user_data['avatar_url'] = short_url
+            
         user_serializer = UserProfileSerializer(instance.customer, data=user_data, partial=partial)
 
         if user_serializer.is_valid():
