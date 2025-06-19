@@ -102,34 +102,34 @@ class CustomerProfileViewSet(viewsets.ModelViewSet):
             
         user_serializer = UserProfileSerializer(instance.customer, data=user_data, partial=partial)
 
-        if user_serializer.is_valid():
-            user_serializer.save()
-            workout_goal = {
-                'general': request.data.get('general'),
-                'weight': request.data.get('goal_weight'),
-                'muscle_mass': request.data.get('goal_muscle_mass'),
-                'body_fat': request.data.get('goal_body_fat'),
-            }
-            profile_data = {
-                'first_name': request.data.get('first_name'),
-                'last_name': request.data.get('last_name'),
-                'address': request.data.get('address'),
-                'gender': request.data.get('gender'),
-                'birthday': request.data.get('birthday'),
-                'height': request.data.get('height'),
-                'weight': request.data.get('weight'),
-                'workout_goal': workout_goal,
-            }
+        # if user_serializer.is_valid():
+        user_serializer.save()
+        workout_goal = {
+            'general': request.data.get('general'),
+            'weight': request.data.get('goal_weight'),
+            'muscle_mass': request.data.get('goal_muscle_mass'),
+            'body_fat': request.data.get('goal_body_fat'),
+        }
+        profile_data = {
+            'first_name': request.data.get('first_name'),
+            'last_name': request.data.get('last_name'),
+            'address': request.data.get('address'),
+            'gender': request.data.get('gender'),
+            'birthday': request.data.get('birthday'),
+            'height': request.data.get('height'),
+            'weight': request.data.get('weight'),
+            'workout_goal': workout_goal,
+        }
 
-            profile_serializer = CreateCustomerProfileSerializer(instance, data=profile_data, partial=partial)
+        profile_serializer = CreateCustomerProfileSerializer(instance, data=profile_data, partial=partial)
 
-            if profile_serializer.is_valid():
-                profile_serializer.save()
-                return Response({'message': 'Profile updated successfully!'}, status=status.HTTP_200_OK)
-            else:
-                return Response({'profile_errors': profile_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        if profile_serializer.is_valid():
+            profile_serializer.save()
+            return Response({'message': 'Profile updated successfully!'}, status=status.HTTP_200_OK)
         else:
-            return Response({'user_errors': user_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'profile_errors': profile_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+        # else:
+        #     return Response({'user_errors': user_serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
     
 
