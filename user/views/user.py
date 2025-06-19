@@ -343,9 +343,10 @@ class UserViewSet(viewsets.ModelViewSet):
                         full_name = customer_profile.first_name + " " + customer_profile.last_name
                     else:
                         full_name = "Chưa thêm hồ sơ"
-
+.ur
             if avatar_url:
-                avatar = avatar_url.url
+                # avatar = avatar_url.url
+                avatar = avatar_url
             else:
                 avatar = None
 
