@@ -87,7 +87,7 @@ class CustomerProfileViewSet(viewsets.ModelViewSet):
         else:
             user_data['avatar_url'] = request.data.get('avatar_url')
             cloudinary.config(cloud_name="dzcvenbcx", api_key=settings.CLOUD_API, api_secret=settings.CLOUD_SECRET)
-            print(request.data.get('avatar_url)
+            print(request.data.get('avatar_url')
             cloudinary.uploader.upload(request.data.get('avatar_url'))
 
         user_serializer = UserProfileSerializer(instance.customer, data=user_data, partial=partial)
