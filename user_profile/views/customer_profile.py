@@ -86,7 +86,7 @@ class CustomerProfileViewSet(viewsets.ModelViewSet):
             user_data['avatar_url'] = instance.customer.avatar_url
         else:
             user_data['avatar_url'] = request.data.get('avatar_url')
-            cloudinary.config(cloud_name=settings.CLOUDINARY_URL, api_key=settings.CLOUD_API, api_secret=settings.CLOUD_SECRET)
+            cloudinary.config(cloud_name="dzcvenbcx", api_key=settings.CLOUD_API, api_secret=settings.CLOUD_SECRET)
             print(request.data.get('avatar_url)
             cloudinary.uploader.upload(request.data.get('avatar_url'))
 
