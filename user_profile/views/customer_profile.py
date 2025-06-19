@@ -89,6 +89,7 @@ class CustomerProfileViewSet(viewsets.ModelViewSet):
             user_data['avatar_url'] = instance.customer.avatar_url
         else:
             user_data['avatar_url'] = request.data.get('avatar_url')
+            print("Type of avatar_url:", type(user_data['avatar_url']))
             # cloudinary.config(cloud_name="dzcvenbcx", api_key=settings.CLOUD_API, api_secret=settings.CLOUD_SECRET)
             config = cloudinary.config(secure=True)
             print("Credentials: ", config.cloud_name, config.api_key, "\n")
