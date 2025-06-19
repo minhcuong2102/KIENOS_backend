@@ -17,6 +17,14 @@ from service.serializers.contract import ContractSerializer
 from django.db.models import F
 from django.utils import timezone
 from base.permissions import IsAdmin, IsCoach, IsSale
+from django.conf import settings
+from urllib.parse import urlparse
+import cloudinary
+from cloudinary import CloudinaryImage
+import cloudinary.uploader
+import cloudinary.api
+from dotenv import load_dotenv
+load_dotenv()
 
 class CoachProfileViewSet(viewsets.ModelViewSet):
     queryset = CoachProfile.objects.all().order_by('id')
