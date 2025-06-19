@@ -18,7 +18,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=True, default=3)
     status = models.IntegerField(choices=Status.choices, default=Status.ACTIVE)
     email_verified = models.BooleanField(default=False)
-    avatar_url = models.ImageField(upload_to='media/avatars/', blank=True, null=True)
+    avatar_url = models.URLField(blank=True, null=True)
 
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
