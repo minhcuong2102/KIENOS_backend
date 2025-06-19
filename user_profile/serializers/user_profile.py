@@ -37,7 +37,8 @@ class CustomerBriefSerializer(serializers.ModelSerializer):
         ]
 
     def get_avatar(self, obj):
-        return obj.customer.avatar_url.url if obj.customer.avatar_url else None
+        # return obj.customer.avatar_url.url if obj.customer.avatar_url else None
+        return obj.customer.avatar_url if obj.customer.avatar_url else None
     
     def get_email(self, obj):
         return obj.customer.email if obj.customer else None
@@ -78,7 +79,8 @@ class CoachProfileSerializer(serializers.ModelSerializer):
         return obj.coach.id if obj.coach else None
     
     def get_avatar(self, obj):
-        return obj.coach.avatar_url.url if obj.coach.avatar_url else None
+        # return obj.coach.avatar_url.url if obj.coach.avatar_url else None
+        return obj.coach.avatar_url if obj.coach.avatar_url else None
     
     def get_email(self, obj):
         return obj.coach.email if obj.coach.email else None
@@ -134,7 +136,8 @@ class CustomerProfileSerializer(serializers.ModelSerializer):
         return ContractCustomSerializer(contracts, many=True).data if contracts.exists() else None
 
     def get_avatar(self, obj):
-        return obj.customer.avatar_url.url if obj.customer.avatar_url else None
+        # return obj.customer.avatar_url.url if obj.customer.avatar_url else None
+        return obj.customer.avatar_url if obj.customer.avatar_url else None
     
     def get_customer_user_id(self, obj):
         return obj.customer.id if obj.customer.id else None
@@ -171,7 +174,8 @@ class CoachProfileShortSerializer(serializers.ModelSerializer):
                   ]  
     
     def get_avatar(self, obj):
-        return obj.coach.avatar_url.url if obj.coach.avatar_url else None
+        # return obj.coach.avatar_url.url if obj.coach.avatar_url else None
+        return obj.coach.avatar_url if obj.coach.avatar_url else None
     
     def get_coach_user_id(self, obj):
         return obj.coach.id if obj.coach else None
@@ -220,7 +224,8 @@ class CustomerProfileShortSerializer(serializers.ModelSerializer):
                   ]  
         
     def get_avatar(self, obj):
-        return obj.customer.avatar_url.url if obj.customer.avatar_url else None
+        # return obj.customer.avatar_url.url if obj.customer.avatar_url else None
+        return obj.customer.avatar_url if obj.customer.avatar_url else None
     
     def get_customer_user_id(self, obj):
         return obj.customer.id if obj.customer.id else None
@@ -273,7 +278,8 @@ class CustomerProfileShowSerializer(serializers.ModelSerializer):
                   ]
         
     def get_avatar(self, obj):
-        return obj.customer.avatar_url.url if obj.customer.avatar_url else None
+        # return obj.customer.avatar_url.url if obj.customer.avatar_url else None
+        return obj.customer.avatar_url if obj.customer.avatar_url else None
     
     def get_phone(self, obj):
         return obj.customer.phone if obj.customer else None
