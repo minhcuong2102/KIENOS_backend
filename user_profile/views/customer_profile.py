@@ -36,6 +36,8 @@ class CustomerProfileViewSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         user = request.user
+        config = cloudinary.config(secure=True)
+        print("Credentials: ", config.cloud_name, config.api_key, "\n")
         upload_result = cloudinary.uploader.upload(request.data.get('avatar_url'))
         full_url = upload_result['secure_url']
         parsed_url = urlparse(upload_result['secure_url'])
