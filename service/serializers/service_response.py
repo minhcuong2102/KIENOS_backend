@@ -59,5 +59,6 @@ class ServiceResponseShortSerializer(serializers.ModelSerializer):
 
     def get_customer_avatar(self, obj):
         if obj.customer and obj.customer.customer.avatar_url:
-            return obj.customer.customer.avatar_url.url
+            # return obj.customer.customer.avatar_url.url
+            return obj.customer.customer.avatar_url
         return None
