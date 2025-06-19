@@ -97,6 +97,7 @@ class CustomerProfileViewSet(viewsets.ModelViewSet):
             full_url = upload_result['secure_url']
             parsed_url = urlparse(upload_result['secure_url'])
             short_url = parsed_url.path 
+            print(short_url)
             user_data['avatar_url'] = short_url
             
         user_serializer = UserProfileSerializer(instance.customer, data=user_data, partial=partial)
